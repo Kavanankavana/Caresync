@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CareSync · Sign in</title>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="login">
+    <!-- Left: illustration made only with HTML + CSS -->
+    <section class="art">
+      <div class="brand"><span class="logo"><i class="bi bi-heart-pulse-fill"></i></span><b>CareSync</b></div>
+      <h1>Shorter waits.<br>Calmer clinics.</h1>
+      <p>Appointments, capacity and live queues in one place.</p>
+      <svg class="ecg" viewBox="0 0 400 80"><path d="M0 40 H110 L130 40 L145 8 L165 72 L182 40 H260 L275 22 L290 40 H400"/></svg>
+      <div class="float f1"><i class="bi bi-ticket-perforated"></i><div><small>Now serving</small><b>Token C102</b></div></div>
+      <div class="float f2"><i class="bi bi-stopwatch"></i><div><small>Average wait</small><b>8 minutes</b></div></div>
+      <div class="float f3"><i class="bi bi-check2-circle"></i><div><small>Slots booked today</small><b>78% of capacity</b></div></div>
+    </section>
+
+    <!-- Right: login form -->
+    <section class="formside">
+      <form id="loginForm" class="loginbox" novalidate>
+        <h2>Welcome back</h2>
+        <p class="muted">Sign in to continue to your dashboard.</p>
+        <label>I am a</label>
+        <div class="roles">
+          <button type="button" class="role on" data-role="Admin"><i class="bi bi-shield-check"></i>Admin</button>
+          <button type="button" class="role" data-role="Doctor"><i class="bi bi-heart-pulse"></i>Doctor</button>
+          <button type="button" class="role" data-role="Receptionist"><i class="bi bi-person-workspace"></i>Receptionist</button>
+          <button type="button" class="role" data-role="Patient"><i class="bi bi-person"></i>Patient</button>
+        </div>
+        <div id="roleDesc" class="role-desc">Full clinic operations, analytics, doctor capacity &amp; system settings</div>
+        <label for="email">Email</label>
+        <input id="email" class="input" type="email" placeholder="admin@caresync.com" value="admin@caresync.com">
+        <small class="err" id="emailErr"></small>
+        <label for="pass">Password</label>
+        <input id="pass" class="input" type="password" placeholder="At least 6 characters">
+        <small class="err" id="passErr"></small>
+        <a href="#" id="forgot" class="forgot">Forgot password?</a>
+        <button class="btn big" type="submit">Sign in</button>
+        <p class="muted tiny">Demo: use any email and a password of 6+ characters.</p>
+      </form>
+    </section>
+  </div>
+  <div id="toasts"></div>
+  <script src="js/data.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
