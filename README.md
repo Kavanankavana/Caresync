@@ -42,8 +42,9 @@ Role-tailored interfaces and permissions for **Admin**, **Doctor**, **Receptioni
 - **Interactive Analytics**: Dynamic Chart.js visualizations for appointment status breakdown and hourly patient traffic flow.
 - **Offline / Local Mode Support**: Built-in mock data engine using browser `localStorage` allows instant demo usage without mandatory database configuration.
 - **Full Backend Support**:
+  - **Spring Boot & Hibernate Backend**: Enterprise-grade Java backend using Spring Boot 3, Spring Data JPA, Hibernate ORM, and MySQL.
   - **Node.js**: Express server with MySQL connection pooling and RESTful API endpoints.
-  - **Java Backend**: Standard Java HTTP server (`CareSyncServer`) with JDBC connectivity.
+  - **Legacy Core Java**: Standalone Java HTTP server with raw JDBC connectivity preserved for comparison.
 
 ---
 
@@ -63,11 +64,41 @@ caresync/
 │   │   ├── app.js                # Role navigation, rendering, and UI logic
 │   │   ├── data.js               # Demo dataset & localStorage state management
 │   │   └── login.js              # Authentication and role switcher
-│   ├── java-backend/             # Optional Java backend
-│   │   ├── pom.xml
-│   │   └── src/com/caresync/
-│   │       ├── CareSyncServer.java
-│   │       └── DBConnection.java
+│   ├── java-backend/             # Spring Boot & Hibernate Backend
+│   │   ├── pom.xml               # Maven configuration (Spring Boot 3 + JPA/Hibernate)
+│   │   ├── run-backend.bat       # Quick-launch script for Windows
+│   │   ├── legacy-raw-jdbc/      # Reference raw JDBC server
+│   │   │   ├── CareSyncServer.java
+│   │   │   └── DBConnection.java
+│   │   └── src/main/
+│   │       ├── java/com/caresync/
+│   │       │   ├── CareSyncApplication.java   # @SpringBootApplication
+│   │       │   ├── config/CorsConfig.java     # Global CORS configuration
+│   │       │   ├── model/                     # Hibernate @Entity mappings
+│   │       │   │   ├── Doctor.java
+│   │       │   │   ├── Patient.java
+│   │       │   │   ├── Appointment.java
+│   │       │   │   ├── QueueToken.java
+│   │       │   │   └── ClinicSetting.java
+│   │       │   ├── repository/                # Spring Data JPA Repositories
+│   │       │   │   ├── DoctorRepository.java
+│   │       │   │   ├── PatientRepository.java
+│   │       │   │   ├── AppointmentRepository.java
+│   │       │   │   ├── QueueTokenRepository.java
+│   │       │   │   └── ClinicSettingRepository.java
+│   │       │   ├── service/                   # Business Service & Data Seeder
+│   │       │   │   ├── ClinicService.java
+│   │       │   │   └── DataSeederService.java
+│   │       │   └── controller/                # REST Controllers (@RestController)
+│   │       │       ├── StatusController.java
+│   │       │       ├── StateController.java
+│   │       │       ├── DoctorController.java
+│   │       │       ├── PatientController.java
+│   │       │       ├── AppointmentController.java
+│   │       │       ├── QueueController.java
+│   │       │       └── SettingsController.java
+│   │       └── resources/
+│   │           └── application.properties     # Spring datasource & Hibernate settings
 │   ├── index.html                # Sign-in portal
 │   ├── dashboard.html            # Main clinic dashboard
 │   ├── queue.html                # Live queue & token tracker
@@ -110,13 +141,25 @@ The server will start on `http://localhost:3000`.
 
 ---
 
-### 3. Java Backend (Optional)
-To run the standalone Java HTTP server:
+### 3. Spring Boot & Hibernate Backend (Java)
+To run the enterprise Spring Boot & Hibernate API server:
 
 ```bash
 cd caresync/java-backend
-javac -d bin src/com/caresync/*.java
-java -cp bin com.caresync.CareSyncServer
+mvn spring-boot:run
+```
+*Or double-click `run-backend.bat` / run `CareSyncApplication.java` in IntelliJ IDEA or Eclipse.*  
+The Spring Boot server will start on `http://localhost:8080` with automatic table schema updates via Hibernate (`spring.jpa.hibernate.ddl-auto=update`) and auto-seed demo data if tables are empty.
+
+---
+
+### 4. Legacy Core Java Backend (Reference)
+To run the standalone raw JDBC HTTP server:
+
+```bash
+cd caresync/java-backend/legacy-raw-jdbc
+javac -d ../bin *.java
+java -cp ../bin com.caresync.CareSyncServer
 ```
 
 ---
@@ -124,8 +167,9 @@ java -cp bin com.caresync.CareSyncServer
 ## 🛠️ Built With
 
 - **Frontend**: HTML5, Modern CSS3, JavaScript (ES6+), [Chart.js](https://www.chartjs.org/), [Bootstrap Icons](https://icons.getbootstrap.com/)
-- **Backend**: Node.js, Express, MySQL2
-- **Java**: Java SE, Embedded HttpServer, JDBC
+- **Spring Boot & Hibernate Backend**: Spring Boot 3, Spring Data JPA, Hibernate 6, MySQL Connector/J
+- **Node.js Backend**: Express.js, MySQL2
+- **Database**: MySQL (`caresyncjava`)
 
 ---
 

@@ -5,7 +5,9 @@ caresync/node_modules/
 # Compiled Java class files & build directories
 *.class
 bin/
+target/
 caresync/java-backend/bin/
+caresync/java-backend/target/
 
 # Logs
 *.log
